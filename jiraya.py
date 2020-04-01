@@ -1,6 +1,7 @@
 from jira import JIRA
 from configparser import ConfigParser
 from datetime import datetime
+import numpy
 import csv
 
 config = ConfigParser()
@@ -59,25 +60,38 @@ for issue in issues:
         else:
             issueCategoryName = "Other"
     if inProgressDates:
-        firstInProgressDate = min(inProgressDates).strftime("%d %b %Y")
+        firstInProgressDate = min(inProgressDates)
+        startDate = firstInProgressDate.strftime("%d %b %Y")
     else:
-        firstInProgressDate = "none"
+        firstInProgressDate = None
+        startDate = "not found"
     if doneDates:
         lastDoneDate = max(doneDates)
         doneDate = lastDoneDate.strftime("%d %b %Y")
         doneWeekNumber = lastDoneDate.strftime("%W")
     else:
-        doneDate = "none"
-        doneWeekNumber = "none"
+        lastDoneDate = None
+        doneDate = "not found"
+        doneWeekNumber = "not found"
 
-    csvOutput.append([issueCategoryName, issueSummary, firstInProgressDate, doneDate, doneWeekNumber])
+    if firstInProgressDate and lastDoneDate:
+        timeStart = firstInProgressDate.strftime("%Y-%m-%d")
+        timeEnd = lastDoneDate.strftime("%Y-%m-%d")
+        leadTime = numpy.busday_count(timeStart, timeEnd)
+        leadTime += 1 # count stories started and finished on the same day as 1 day
+        leadTime = str(leadTime)
+    else:
+        leadTime = "none"
+
+    csvOutput.append([issueCategoryName, issueSummary, startDate, doneDate, doneWeekNumber, leadTime])
 
     print(issueKey)
     print(issueCategoryName)
     print(issueSummary)
-    print("Start date: " + firstInProgressDate)
+    print("Start date: " + startDate)
     print("End date: " + doneDate)
     print("Done week: " + doneWeekNumber)
+    print("Lead time: " + leadTime)
 
     print("")
 
