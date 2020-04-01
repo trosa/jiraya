@@ -51,8 +51,14 @@ for issue in issues:
         issueComponentName = issue.fields.components[0].name
     else:
         issueComponentName = "Other"
-    firstInProgressDate = min(inProgressDates).strftime("%d %b %Y")
-    lastDoneDate = max(doneDates).strftime("%d %b %Y")
+    if inProgressDates:
+        firstInProgressDate = min(inProgressDates).strftime("%d %b %Y")
+    else:
+        firstInProgressDate = "none"
+    if doneDates:
+        lastDoneDate = max(doneDates).strftime("%d %b %Y")
+    else:
+        lastDoneDate = "none"
 
     csvOutput.append([issueComponentName, issueSummary, firstInProgressDate, lastDoneDate])
 
