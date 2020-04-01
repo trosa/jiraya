@@ -1,5 +1,6 @@
 from jira import JIRA
 from configparser import ConfigParser
+from datetime import datetime
 
 config = ConfigParser()
 config.read('./config')
@@ -24,16 +25,23 @@ jira = JIRA(options, basic_auth=(user,apikey))
 issues = jira.search_issues(query, expand="changelog")
 
 for issue in issues:
-    firstInProgressDate = ''
-    lastDoneDate = ''
+    inProgressDates = []
+    doneDates = []
     for history in issue.changelog.histories:
         for item in history.items:
             if item.field == 'status':
                 if item.toString == 'In Progress':
-                    firstInProgressDate = history.created
+                    inProgressDate = datetime.strptime(history.created.split("T")[0], "%Y-%m-%d")
+                    inProgressDates.append(inProgressDate)
                 if item.toString == 'Done':
                     lastDoneDate = history.created
+                    doneDate = datetime.strptime(history.created.split("T")[0], "%Y-%m-%d")
+                    doneDates.append(doneDate)
+
     print(issue.key)
+
+    firstInProgressDate = min(inProgressDates).strftime("%d %b %Y")
+    lastDoneDate = max(doneDates).strftime("%d %b %Y")
     print("Start date: " + firstInProgressDate)
     print("End date: " + lastDoneDate)
     print("")
