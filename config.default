@@ -1,0 +1,13 @@
+[Jira]
+server = <https://your-jira-instance.atlassian.net>
+user = <user@example.com>
+apikey = <yourapikey>
+
+[Filter]
+query = <project = BLAH and type = Story>
+startdate = 2020-01-01
+enddate = 2020-03-31
+
+[Statuses]
+startstatuses = In Progress,Development,Doing
+endstatuses = Done
