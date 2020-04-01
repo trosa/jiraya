@@ -38,6 +38,9 @@ for issue in issues:
                     doneDate = datetime.strptime(history.created.split("T")[0], "%Y-%m-%d")
                     doneDates.append(doneDate)
 
+
+    if issue.fields.components:
+        print(issue.fields.components[0].name)
     print(issue.key)
 
     firstInProgressDate = min(inProgressDates).strftime("%d %b %Y")
