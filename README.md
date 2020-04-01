@@ -27,13 +27,13 @@ If you're on a Mac, here's how to install those: https://docs.python-guide.org/s
 
         cp config.default config
         
-6. Modify your new <code>config</code> file by adding your Jira URL, username, API key, and other configurations
+6. Modify your new <code>config</code> file by adding your Jira URL, username, API key, and other configurations.
 
 ## Usage
 
-1. After entering your settings on a <code>config</code> file, run <code>jiraya.py</code>
+1. After entering your settings on a <code>config</code> file, run <code>jiraya.py</code>:
     
-    python3 jiraya.py
+        python3 jiraya.py
 
 You can also pass a date in the format <code>YYYY-MM-DD</code> that will replace the config's start date:
 
@@ -43,4 +43,4 @@ Additionally, you can pass a second date in the same format above, which will re
 
     python jiraya.py 2020-03-01 2020-03-31
          
-2. Jiraya will generate a CSV file named <code>output.csv</code> containing the data extracted from Jira
+2. Jiraya will generate a CSV file named <code>output.csv</code> containing the data extracted from Jira.
