@@ -8,15 +8,26 @@ server = config['Jira']['server']
 user = config['Jira']['user']
 apikey = config['Jira']['apikey']
 query = config['Filter']['query']
+startdate = config['Filter']['startdate']
+enddate = config['Filter']['enddate']
+
+query += " AND resolutiondate >= " + startdate
+query += " AND resolutiondate <= " + enddate
+
+print(query)
 
 options = {
     'server': server
 }
-
 jira = JIRA(options, basic_auth=(user,apikey))
 
-issues = jira.search_issues(query)
+issues = jira.search_issues(query, expand="changelog")
 
-for issue in issues:
-    print(issue.key)
+for issue in issues[:1]:
+    for history in issue.changelog.histories:
+        for item in history.items:
+            if item.field == 'status':
+                print('Date: ', history.created)
+                print('From: ', item.fromString)
+                print('To: ', item.toString)
 
