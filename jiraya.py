@@ -63,17 +63,22 @@ for issue in issues:
     else:
         firstInProgressDate = "none"
     if doneDates:
-        lastDoneDate = max(doneDates).strftime("%d %b %Y")
+        lastDoneDate = max(doneDates)
+        doneDate = lastDoneDate.strftime("%d %b %Y")
+        doneWeekNumber = lastDoneDate.strftime("%W")
     else:
-        lastDoneDate = "none"
+        doneDate = "none"
+        doneWeekNumber = "none"
 
-    csvOutput.append([issueCategoryName, issueSummary, firstInProgressDate, lastDoneDate])
+    csvOutput.append([issueCategoryName, issueSummary, firstInProgressDate, doneDate, doneWeekNumber])
 
     print(issueKey)
     print(issueCategoryName)
     print(issueSummary)
     print("Start date: " + firstInProgressDate)
-    print("End date: " + lastDoneDate)
+    print("End date: " + doneDate)
+    print("Done week: " + doneWeekNumber)
+
     print("")
 
 outputFile = open('output.csv', 'w')

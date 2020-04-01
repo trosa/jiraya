@@ -26,4 +26,4 @@ endstatuses = Done
 
 [Output]
 #These are values of the header row that will be written into the output.csv file
-csvheaders = Label,Card,In Progress,Done
+csvheaders = Label,Card,In Progress,Done,Week Done
