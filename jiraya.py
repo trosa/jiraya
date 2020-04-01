@@ -68,7 +68,7 @@ for issue in issues:
     if doneDates:
         lastDoneDate = max(doneDates)
         doneDate = lastDoneDate.strftime("%d %b %Y")
-        doneWeekNumber = lastDoneDate.strftime("%W")
+        doneWeekNumber = str(int(lastDoneDate.strftime("%W"))+1) #LOL
     else:
         lastDoneDate = None
         doneDate = "not found"
