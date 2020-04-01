@@ -1,6 +1,7 @@
 from jira import JIRA
 from configparser import ConfigParser
 from datetime import datetime
+import csv
 
 config = ConfigParser()
 config.read('./config')
@@ -26,8 +27,9 @@ jira = JIRA(options, basic_auth=(user,apikey))
 
 issues = jira.search_issues(query, expand="changelog", maxResults=999)
 
+csvOutput = []
+
 for issue in issues:
-    print(issue.key)
     inProgressDates = []
     doneDates = []
     for history in issue.changelog.histories:
@@ -42,12 +44,25 @@ for issue in issues:
                     doneDates.append(doneDate)
 
 
+    issueKey = issue.key
+    issueSummary = issue.fields.summary
     if issue.fields.components:
-        print(issue.fields.components[0].name)
-
+        issueComponentName = issue.fields.components[0].name
+    else:
+        issueComponentName = "Other"
     firstInProgressDate = min(inProgressDates).strftime("%d %b %Y")
     lastDoneDate = max(doneDates).strftime("%d %b %Y")
+
+    csvOutput.append([issueComponentName, issueSummary, firstInProgressDate, lastDoneDate])
+
+    print(issueKey)
+    print(issueComponentName)
+    print(issueSummary)
     print("Start date: " + firstInProgressDate)
     print("End date: " + lastDoneDate)
     print("")
 
+outputFile = open('output.csv', 'w')
+with outputFile:
+    writer = csv.writer(outputFile)
+    writer.writerows(csvOutput)
