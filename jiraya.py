@@ -3,7 +3,8 @@ from configparser import ConfigParser
 from datetime import datetime
 import numpy
 import csv
-import sys
+#import sys
+import argparse
 
 config = ConfigParser()
 config.read('./config')
@@ -16,13 +17,21 @@ category = config['Filter']['category']
 startStatuses = config['Statuses']['startstatuses'].split(',')
 endStatuses = config['Statuses']['endstatuses'].split(',')
 csvHeaders = config['Output']['csvheaders'].split(',')
-startDate = config['Filter']['startdate']
-endDate = config['Filter']['enddate']
 
-if len(sys.argv) > 1:
-    startDate = sys.argv[1]
-    if len(sys.argv) > 2:
-        endDate = sys.argv[2]
+parser = argparse.ArgumentParser()
+parser.add_argument("--start", type=datetime.fromisoformat, help="Start date for filter query. Format: YYYY-MM-DD")
+parser.add_argument("--end", type=datetime.fromisoformat, help="End date for filter query. Format: YYYY-MM-DD")
+args = parser.parse_args()
+
+if args.start:
+    startDate = args.start.strftime("%Y-%m-%d")
+else:
+    startDate = config['Filter']['startdate']
+
+if args.end:
+    endDate = args.end.strftime("%Y-%m-%d")
+else:
+    endDate = config['Filter']['enddate']
 
 query += " AND resolutiondate >= " + startDate
 query += " AND resolutiondate <= " + endDate
