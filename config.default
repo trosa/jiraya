@@ -1,15 +1,23 @@
 [Jira]
+#This is the URL for your Jira instance.
 server = <https://your-jira-instance.atlassian.net>
+#This is the username you use to log in to the Jira instance above. Could be your corporate e-mail address.
 user = <user@example.com>
+#This is an API Token that you need to generate from inside the Settings page in your Atlassian account.
 apikey = <yourapikey>
 
 [Filter]
+#This is the query you want to use to filter the cards that will be fetched. Typically the same as your board uses.
 query = <project = BLAH and type = Story>
+#Filter for cards that have been completed on this date and beyond
 startdate = 2020-01-01
+#Filter for cards that have been completed up to this date
 enddate = 2020-03-31
+#Which field to use for the Label column. Values can be 'components' or 'labels'
+category = labels
 
 [Statuses]
-startstatuses = In Progress,Development,Doing
+startstatuses = In Progress,Development,Doing,Working
 endstatuses = Done
 
 [Output]

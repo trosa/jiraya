@@ -12,6 +12,7 @@ apikey = config['Jira']['apikey']
 query = config['Filter']['query']
 startDate = config['Filter']['startdate']
 endDate = config['Filter']['enddate']
+category = config['Filter']['category']
 startStatuses = config['Statuses']['startstatuses'].split(',')
 endStatuses = config['Statuses']['endstatuses'].split(',')
 csvHeaders = config['Output']['csvheaders'].split(',')
@@ -47,10 +48,16 @@ for issue in issues:
 
     issueKey = issue.key
     issueSummary = issue.fields.summary
-    if issue.fields.components:
-        issueComponentName = issue.fields.components[0].name
+    if category == "components":
+        if issue.fields.components:
+            issueCategoryName = issue.fields.components[0].name
+        else:
+            issueCategoryName = "Other"
     else:
-        issueComponentName = "Other"
+        if issue.fields.labels:
+            issueCategoryName = issue.fields.labels[0]
+        else:
+            issueCategoryName = "Other"
     if inProgressDates:
         firstInProgressDate = min(inProgressDates).strftime("%d %b %Y")
     else:
@@ -60,10 +67,10 @@ for issue in issues:
     else:
         lastDoneDate = "none"
 
-    csvOutput.append([issueComponentName, issueSummary, firstInProgressDate, lastDoneDate])
+    csvOutput.append([issueCategoryName, issueSummary, firstInProgressDate, lastDoneDate])
 
     print(issueKey)
-    print(issueComponentName)
+    print(issueCategoryName)
     print(issueSummary)
     print("Start date: " + firstInProgressDate)
     print("End date: " + lastDoneDate)
