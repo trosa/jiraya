@@ -17,8 +17,13 @@ enddate = 2020-03-31
 category = labels
 
 [Statuses]
+#Here you have to list all the names of the Statuses you want to consider being the "start" of the work.
+#Separate values by a comma ","
 startstatuses = In Progress,Development,Doing,Working
+#Here you have to list all the names of the Statuses you want to consider being the "end" of the work
+#Separate values by a comma ","
 endstatuses = Done
 
 [Output]
+#These are values of the header row that will be written into the output.csv file
 csvheaders = Label,Card,In Progress,Done
