@@ -11,3 +11,6 @@ enddate = 2020-03-31
 [Statuses]
 startstatuses = In Progress,Development,Doing
 endstatuses = Done
+
+[Output]
+csvheaders = Label,Card,In Progress,Done

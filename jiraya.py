@@ -10,13 +10,14 @@ server = config['Jira']['server']
 user = config['Jira']['user']
 apikey = config['Jira']['apikey']
 query = config['Filter']['query']
-startdate = config['Filter']['startdate']
-enddate = config['Filter']['enddate']
-startstatuses = config['Statuses']['startstatuses'].split(',')
-endstatuses = config['Statuses']['endstatuses'].split(',')
+startDate = config['Filter']['startdate']
+endDate = config['Filter']['enddate']
+startStatuses = config['Statuses']['startstatuses'].split(',')
+endStatuses = config['Statuses']['endstatuses'].split(',')
+csvHeaders = config['Output']['csvheaders'].split(',')
 
-query += " AND resolutiondate >= " + startdate
-query += " AND resolutiondate <= " + enddate
+query += " AND resolutiondate >= " + startDate
+query += " AND resolutiondate <= " + endDate
 
 print(query)
 
@@ -35,10 +36,10 @@ for issue in issues:
     for history in issue.changelog.histories:
         for item in history.items:
             if item.field == 'status':
-                if item.toString in startstatuses:
+                if item.toString in startStatuses:
                     inProgressDate = datetime.strptime(history.created.split("T")[0], "%Y-%m-%d")
                     inProgressDates.append(inProgressDate)
-                if item.toString in endstatuses:
+                if item.toString in endStatuses:
                     lastDoneDate = history.created
                     doneDate = datetime.strptime(history.created.split("T")[0], "%Y-%m-%d")
                     doneDates.append(doneDate)
@@ -65,4 +66,5 @@ for issue in issues:
 outputFile = open('output.csv', 'w')
 with outputFile:
     writer = csv.writer(outputFile)
+    writer.writerows([csvHeaders])
     writer.writerows(csvOutput)
