@@ -29,8 +29,18 @@ If you're on a Mac, here's how to install those: https://docs.python-guide.org/s
         
 6. Modify your new <code>config</code> file by adding your Jira URL, username, API key, and other configurations
 
-7. Unleash the power of Jiraya!
+## Usage
 
-        python3 jiraya.py
-        
-8. Jiraya will generate a CSV file named <code>output.csv</code> containing the data extracted from Jira
+1. After entering your settings on a <code>config</code> file, run <code>jiraya.py</code>
+    
+    python3 jiraya.py
+
+You can also pass a date in the format <code>YYYY-MM-DD</code> that will replace the config's start date:
+
+    python3 jiraya.py 2020-03-01
+
+Additionally, you can pass a second date in the same format above, which will replace the config's end date:
+
+    python jiraya.py 2020-03-01 2020-03-31
+         
+2. Jiraya will generate a CSV file named <code>output.csv</code> containing the data extracted from Jira

@@ -3,6 +3,7 @@ from configparser import ConfigParser
 from datetime import datetime
 import numpy
 import csv
+import sys
 
 config = ConfigParser()
 config.read('./config')
@@ -11,12 +12,17 @@ server = config['Jira']['server']
 user = config['Jira']['user']
 apikey = config['Jira']['apikey']
 query = config['Filter']['query']
-startDate = config['Filter']['startdate']
-endDate = config['Filter']['enddate']
 category = config['Filter']['category']
 startStatuses = config['Statuses']['startstatuses'].split(',')
 endStatuses = config['Statuses']['endstatuses'].split(',')
 csvHeaders = config['Output']['csvheaders'].split(',')
+startDate = config['Filter']['startdate']
+endDate = config['Filter']['enddate']
+
+if len(sys.argv) > 1:
+    startDate = sys.argv[1]
+    if len(sys.argv) > 2:
+        endDate = sys.argv[2]
 
 query += " AND resolutiondate >= " + startDate
 query += " AND resolutiondate <= " + endDate
