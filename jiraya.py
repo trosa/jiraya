@@ -23,11 +23,18 @@ jira = JIRA(options, basic_auth=(user,apikey))
 
 issues = jira.search_issues(query, expand="changelog")
 
-for issue in issues[:1]:
+for issue in issues:
+    firstInProgressDate = ''
+    lastDoneDate = ''
     for history in issue.changelog.histories:
         for item in history.items:
             if item.field == 'status':
-                print('Date: ', history.created)
-                print('From: ', item.fromString)
-                print('To: ', item.toString)
+                if item.toString == 'In Progress':
+                    firstInProgressDate = history.created
+                if item.toString == 'Done':
+                    lastDoneDate = history.created
+    print(issue.key)
+    print("Start date: " + firstInProgressDate)
+    print("End date: " + lastDoneDate)
+    print("")
 
