@@ -148,7 +148,6 @@ for issue in issues:
         timeEnd = lastDoneDate.strftime("%Y-%m-%d")
         leadTime = numpy.busday_count(timeStart, timeEnd)
         leadTime += 1 # count stories started and finished on the same day as 1 day
-        leadTime = str(leadTime)
 
         #if issue has passed through sign off
         if lastSignOffDate:
@@ -178,11 +177,12 @@ for issue in issues:
     print(issueCategoryName)
     print(issueSummary)
     print("Start date: " + startDate)
-    print("Review date: " + reviewDate)
-    print("Sign Off date: " + signOffDate)
     print("End date: " + doneDate)
     print("Done week: " + doneWeekNumber)
-    print("Lead time: " + leadTime)
+    print("Lead time: " + str(leadTime))
+    print("Time In Progress: " + str(timeInProgress))
+    print("Time In Review: " + str(timeInReview))
+    print("Time In Sign Off: " + str(timeInSignOff))
 
     print("")
 
