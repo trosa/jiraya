@@ -17,11 +17,14 @@ enddate = 2020-03-31
 category = labels
 
 [Statuses]
+#Separate values by a comma ","
 #Here you have to list all the names of the Statuses you want to consider being the "start" of the work.
-#Separate values by a comma ","
 startstatuses = In Progress,Development,Doing,Working,Start
+#Here you have to list all the names of the Statuses you want to consider being the "review/qa" of the work.
+reviewstatuses = In Review,Dev Complete,In QA,Review,Ready for QA,Ready for UAT,In UAT
+#Here you have to list all the names of the Statuses you want to consider being the "sign-off" of the work.
+signoffstatuses = Sign Off,Reviewed,Ready to Deploy,Waiting for Deploy,Waiting for Deployment
 #Here you have to list all the names of the Statuses you want to consider being the "end" of the work
-#Separate values by a comma ","
 endstatuses = Done
 
 [Output]
